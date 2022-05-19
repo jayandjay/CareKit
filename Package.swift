@@ -17,13 +17,6 @@ let package = Package(
         .library(
             name: "CareKitStore",
             targets: ["CareKitStore"]),
-
-        .library(
-            name: "CareKitFHIR",
-            targets: ["CareKitFHIR"])
-    ],
-    dependencies: [
-        .package(url: "https://github.com/apple/FHIRModels.git", from: "0.1.0")
     ],
     targets: [
         .target(
@@ -45,16 +38,6 @@ let package = Package(
                 .process("CoreData/Migrations/2_0To2_1/2.0_2.1_Mapping.xcmappingmodel")
             ]),
 
-        .target(
-            name: "CareKitFHIR",
-            dependencies: [
-                "CareKitStore",
-                .product(name: "ModelsR4", package: "FHIRModels"),
-                .product(name: "ModelsDSTU2", package: "FHIRModels")
-            ],
-            path: "CareKitFHIR/CareKitFHIR",
-            exclude: ["Info.plist"]),
-
         .testTarget(
             name: "CareKitStoreTests",
             dependencies: ["CareKitStore"],
@@ -63,12 +46,6 @@ let package = Package(
             resources: [
                 .process("CoreDataSchema/Migrations")
             ]),
-
-        .testTarget(
-            name: "CareKitFHIRTests",
-            dependencies: ["CareKitFHIR"],
-            path: "CareKitFHIR/CareKitFHIRTests",
-            exclude: ["Info.plist", "CareKitFHIR.xctestplan"]),
 
         .testTarget(
             name: "CareKitTests",
